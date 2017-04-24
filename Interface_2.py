@@ -5,6 +5,7 @@ from tkinter.messagebox import *
 from tkinter.filedialog import *
 from tkinter import filedialog
 from uuid import getnode as get_mac
+from port import brate,comp1_in
 something = False
 user_name_get = None
 reciever_name_get = None
@@ -77,6 +78,7 @@ def Login():#регистрация пользователя(можно вызв
         username_list.extend(l)#занесение подсписка в список пользователей
         print('User',user_name,'connected.')
         print(username_list)
+
         Username_Flag = user_name
     elif len(user_name) == 0:#условие невведенного имени
         short_entry_error = Tk()
@@ -147,15 +149,18 @@ def Choose_COMspeed():
         COMspeed_Flag = 9600
     elif COMspeed_Variable.get() == 38400:
         COMspeed_Flag = 38400
+    brate(COMspeed_Flag)
     return COMspeed_Flag
 
 #вывод информации
 def Information():
+    print(comp1_in.baudrate)
     info_interface = Tk()
     info_interface.title('Information')
     info='Some useless information :).'
     Programm_info = Label(info_interface, text=info)
     Programm_info.pack()
+
 
 
 #функция отключения пользователя
@@ -206,7 +211,7 @@ def Send_File():#отправка файла
 def Recieve_File_Interface(file_path):
 
     def Open_File():
-        return 0
+        askopenfile(os.path.abspath(file_path))
 
     def Save_File():
         directory = os.path.normpath(askdirectory())
@@ -348,11 +353,3 @@ button_disconnect = Button(
 
 
 main_interface_title.mainloop()
-
-'''
-os.path.split(path)
-Параметры:	path (str) – путь к файлу
-Возвращает кортеж из пары строк - (путь к родителской папке, название файла).
-
->>> os.path.split('c:\\system\\apps\\Python\\Python.app')
-('c:\\system\\apps\\Python\\', 'Python.app')'''
